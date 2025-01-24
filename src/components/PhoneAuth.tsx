@@ -89,7 +89,7 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
                   render={({ slots }) => (
                     <InputOTPGroup className="gap-2 justify-center">
                       {slots.map((slot, idx) => (
-                        <InputOTPSlot key={idx} {...slot} />
+                        <InputOTPSlot key={idx} {...slot} index={idx} />
                       ))}
                     </InputOTPGroup>
                   )}
