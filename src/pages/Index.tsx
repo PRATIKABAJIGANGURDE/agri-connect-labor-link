@@ -20,24 +20,22 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-agri-green">
+    <div className="min-h-screen bg-tech-gray">
       <Navigation />
-      <div className="container mx-auto py-20 px-4">
-        <h1 className="text-4xl font-bold text-center text-agri-text mb-12">
-          Agri-Labor Connect
-        </h1>
-        
-        {!isAuthenticated ? (
-          <PhoneAuth onSuccess={handleAuthSuccess} />
-        ) : !userType ? (
-          <UserTypeSelection onSelect={setUserType} />
-        ) : userType === "farmer" ? (
-          <PostWork />
-        ) : !showJobList ? (
-          <LocationSearch onLocationSet={handleLocationSet} />
-        ) : (
-          <JobList />
-        )}
+      <div className="container mx-auto pt-20 px-4 pb-8">
+        <div className="max-w-4xl mx-auto">
+          {!isAuthenticated ? (
+            <PhoneAuth onSuccess={handleAuthSuccess} />
+          ) : !userType ? (
+            <UserTypeSelection onSelect={setUserType} />
+          ) : userType === "farmer" ? (
+            <PostWork />
+          ) : !showJobList ? (
+            <LocationSearch onLocationSet={handleLocationSet} />
+          ) : (
+            <JobList />
+          )}
+        </div>
       </div>
     </div>
   );
