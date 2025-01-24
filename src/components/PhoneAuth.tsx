@@ -82,9 +82,9 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
             <>
               <div className="space-y-4">
                 <InputOTP
+                  maxLength={6}
                   value={otp}
                   onChange={(value) => setOtp(value)}
-                  maxLength={6}
                   render={({ slots }) => (
                     <InputOTPGroup className="gap-2 justify-center">
                       {slots.map((slot, idx) => (
