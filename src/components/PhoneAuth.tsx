@@ -39,6 +39,7 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
       return;
     }
 
+    // For demo purposes, any 6-digit OTP is considered valid
     toast({
       title: "Success",
       description: "Phone number verified successfully",
@@ -50,10 +51,10 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
     <div className="w-full max-w-md mx-auto p-4 animate-fadeIn">
       <Card className="bg-white shadow-lg">
         <CardHeader className="space-y-1 flex flex-col items-center">
-          <div className="w-16 h-16 bg-tech-green/10 rounded-full flex items-center justify-center mb-4">
-            <Phone className="h-8 w-8 text-tech-green" />
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <Phone className="h-8 w-8 text-green-600" />
           </div>
-          <CardTitle className="text-2xl font-semibold text-tech-green">
+          <CardTitle className="text-2xl font-semibold text-green-600">
             Phone Verification
           </CardTitle>
         </CardHeader>
@@ -66,13 +67,13 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
                   placeholder="Enter your phone number"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="text-lg focus:ring-tech-green"
+                  className="text-lg"
                   maxLength={10}
                 />
               </div>
               <Button 
                 onClick={handleSendOtp}
-                className="w-full bg-tech-green hover:bg-tech-green/90 text-white flex items-center justify-center gap-2"
+                className="w-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2"
               >
                 <Send className="h-5 w-5" />
                 Send OTP
@@ -84,11 +85,11 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
                 <InputOTP
                   maxLength={6}
                   value={otp}
-                  onChange={(value) => setOtp(value)}
+                  onChange={setOtp}
                   render={({ slots }) => (
                     <InputOTPGroup className="gap-2 justify-center">
                       {slots.map((slot, idx) => (
-                        <InputOTPSlot key={idx} {...slot} index={idx} />
+                        <InputOTPSlot key={idx} {...slot} />
                       ))}
                     </InputOTPGroup>
                   )}
@@ -96,7 +97,7 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
               </div>
               <Button 
                 onClick={handleVerifyOtp}
-                className="w-full bg-tech-green hover:bg-tech-green/90 text-white flex items-center justify-center gap-2"
+                className="w-full bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2"
               >
                 <Send className="h-5 w-5" />
                 Verify OTP
