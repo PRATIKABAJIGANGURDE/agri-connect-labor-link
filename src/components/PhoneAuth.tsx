@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
-import { Phone } from "lucide-react";
+import { Phone, Send } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "./ui/input-otp";
 
 const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -12,6 +13,15 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
   const { toast } = useToast();
 
   const handleSendOtp = () => {
+    if (!phoneNumber || phoneNumber.length < 10) {
+      toast({
+        title: "Invalid Phone Number",
+        description: "Please enter a valid phone number",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     toast({
       title: "OTP Sent",
       description: "Please check your phone for the verification code",
@@ -20,6 +30,15 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
   };
 
   const handleVerifyOtp = () => {
+    if (!otp || otp.length !== 6) {
+      toast({
+        title: "Invalid OTP",
+        description: "Please enter a valid 6-digit OTP",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Success",
       description: "Phone number verified successfully",
@@ -38,7 +57,7 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
             Phone Verification
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           {!showOtp ? (
             <>
               <div className="space-y-2">
@@ -47,32 +66,39 @@ const PhoneAuth = ({ onSuccess }: { onSuccess: () => void }) => {
                   placeholder="Enter your phone number"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="text-lg"
+                  className="text-lg focus:ring-tech-green"
+                  maxLength={10}
                 />
               </div>
               <Button 
                 onClick={handleSendOtp}
-                className="w-full bg-tech-green hover:bg-tech-green/90 text-white"
+                className="w-full bg-tech-green hover:bg-tech-green/90 text-white flex items-center justify-center gap-2"
               >
+                <Send className="h-5 w-5" />
                 Send OTP
               </Button>
             </>
           ) : (
             <>
-              <div className="space-y-2">
-                <Input
-                  type="text"
-                  placeholder="Enter OTP"
+              <div className="space-y-4">
+                <InputOTP
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  className="text-lg text-center tracking-widest"
+                  onChange={(value) => setOtp(value)}
                   maxLength={6}
+                  render={({ slots }) => (
+                    <InputOTPGroup className="gap-2 justify-center">
+                      {slots.map((slot, idx) => (
+                        <InputOTPSlot key={idx} {...slot} />
+                      ))}
+                    </InputOTPGroup>
+                  )}
                 />
               </div>
               <Button 
                 onClick={handleVerifyOtp}
-                className="w-full bg-tech-green hover:bg-tech-green/90 text-white"
+                className="w-full bg-tech-green hover:bg-tech-green/90 text-white flex items-center justify-center gap-2"
               >
+                <Send className="h-5 w-5" />
                 Verify OTP
               </Button>
             </>
